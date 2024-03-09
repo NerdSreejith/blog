@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}{{blogs.title}}{% endblock title %}
+{% block content %}
+  <div class="container" style="margin-top: 54px;">
+    <div class="blog-post">
+      <h2>{{ blogs.title }}</h2>
+      <img src="{{ blogs.image.url }}" alt="{{ blogs.title }} Image" width="500">
+      <p>Author: {{ blogs.Name }}</p>
+      <p>Summary: {{ blogs.s_content }}</p>
+      <p>Content: {{ blogs.content }}</p>
+      <p>Time: {{ blogs.time }}</p>
+    </div>
+  </div>
+{% endblock content %}
