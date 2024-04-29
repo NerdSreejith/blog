@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<h1 class="text-center p-5">MY BLOGS</h1>
+
+<div class="album py-5 bg-body-dark">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for blog in blogs %}
+        <div class="col">
+          <div class="card shadow-sm">
+            {% if blog.image %}
+              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="{{ blog.image.url }}" alt="{{ blog.title }}">
+            {% else %}
+              <img class="bd-placeholder-img card-img-top" width="100%" height="225" src="https://via.placeholder.com/225x100.png?text=No+Image" alt="No Image">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ blog.title }}</h5>
+              <!-- Assuming 'Name' is a field in the Blog model, you might want to replace it with 'author' -->
+              <h6 class="card-subtitle mb-2 text-body-secondary">{{ blog.Name }}</h6>
+              <p class="card-text">{{ blog.s_content }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{% url 'content' blog.id %}" class="btn btn-sm btn-outline-secondary">View</a>
+                  <!-- Add edit and delete options -->
+                  {% if user.is_authenticated and user == blog.author %}
+                    <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                    <a href="#" class="btn btn-sm btn-outline-secondary">Delete</a>
+                  {% endif %}
+                </div>
+                <small class="text-body-secondary">{{ blog.time }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

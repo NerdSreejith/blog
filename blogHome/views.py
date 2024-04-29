@@ -75,7 +75,38 @@ def comment(request):
     else:
         return redirect('login')
 
+from .forms import BlogForm  # Import your BlogForm from forms.py
+@login_required
+def create_blog(request):
+    if request.method == "POST":
+        form = BlogForm(request.POST, request.FILES)
+        if form.is_valid():
+            blog = form.save(commit=False)
+            blog.author = request.user
+            blog.save()
+            messages.success(request, "Blog created successfully")
+            return redirect('home')
+        else:
+            messages.error(request, "Blog creation failed. Please check the form.")
+    else:
+        form = BlogForm()
+    return render(request, 'create.html', {'form': form})
+def edit_blog(request, blog_id):
+    blog = get_object_or_404(Blog, pk=blog_id)
+
+    if request.method == "POST":
+        form = BlogForm(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = BlogForm(instance=blog)
+
+    return render(request, 'create.html', {'form': form, 'blog': blog})
 
 
-def  replay(request):
-    pass
+
+def  delete_blog(request,blog_id):
+    instance = Blog.objects.get(pk=blog_id)
+    instance.delete()
+    return redirect('home')

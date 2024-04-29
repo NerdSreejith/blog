@@ -8,6 +8,11 @@ urlpatterns = [
     path('login/',views.user_login,name='login'),
     path('logout/',views.user_logout,name='logout'),
     path('comment/',views.comment,name='comment'),
-    path('replay/',views.replay,name='reply'),
+    path('create/',views.create_blog,name="create"),
+    path('edit/<int:blog_id>/',views.edit_blog,name="edit"),
+    path('delete/<int:blog_id>/', views.delete_blog, name='delete')
+
+
+    
 
 ]

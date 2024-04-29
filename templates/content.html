@@ -4,10 +4,13 @@
 <div class="container" style="margin-top: 54px;">
   <div class="blog-post">
     <h2>{{ blogs.title }}</h2>
-    <img src="{{ blogs.image.url }}" alt="{{ blogs.title }} Image" class="img-fluid" style="max-width: 100%;">
-    <p class="mt-3">Author: {{ blogs.author }}</p>
-    <p>{{ blogs.content }}</p>
-    <p class="mt-3">Time: {{ blogs.time }}</p>
+
+    <img src="{{ blogs.image.url }}" alt="{{ blogs.title }}" class="img-fluid rounded mb-3">
+    <p class="mb-2"><strong>Author:</strong> {{ blogs.author }}</p>
+    <p class="mb-2"><strong>Time:</strong> {{ blogs.time }}</p>
+    <p>{{ blogs.content_in_short }}</p>
+
+    <p>{{ blogs.Full_content }}</p>
   </div>
 </div>
 <section id="comment" class="mt-5">
@@ -17,8 +20,8 @@
     <form action="{% url 'comment' %}" method="post" class="mb-4">
       {% csrf_token %}
       <input type="hidden" name="blog_id" value="{{ blogs.id }}">
-      <div class="form-group">
-        <label for="comment">Add a Comment:</label>
+      <div class="mb-3">
+        <label for="comment" class="form-label">Add a Comment:</label>
         <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
@@ -28,10 +31,10 @@
     {% endif %}
     <br>
     {% for comment in comments %}
-    <div class="card mb-3">
+    <div class="card mt-4">
       <div class="card-body">
-        <div class="d-flex align-items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle mr-2" viewBox="0 0 16 16">
+        <div class="d-flex align-items-center mb-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-circle me-2" viewBox="0 0 16 16">
             <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
             <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
           </svg>
@@ -43,11 +46,11 @@
         </button>
         <div class="collapse mt-2" id="reply{{ forloop.counter }}">
           <div class="card card-body">
-            <form action="{% url 'reply' %}" method="post">
+            <form action="#" method="post">
               {% csrf_token %}
               <input type="hidden" name="comment_id" value="{{ comment.id }}">
-              <div class="form-group">
-                <label for="reply">Your Reply:</label>
+              <div class="mb-3">
+                <label for="reply" class="form-label">Your Reply:</label>
                 <textarea class="form-control" id="reply" name="reply" rows="2"></textarea>
               </div>
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -72,12 +75,12 @@
         <p>Please log in to submit a comment.</p>
         <form action="{% url 'login' %}" method="post">
           {% csrf_token %}
-          <div class="form-group">
-            <label for="loginEmail">Email address</label>
+          <div class="mb-3">
+            <label for="loginEmail" class="form-label">Email address</label>
             <input type="email" class="form-control" id="loginEmail" name="email">
           </div>
-          <div class="form-group">
-            <label for="loginPassword">Password</label>
+          <div class="mb-3">
+            <label for="loginPassword" class="form-label">Password</label>
             <input type="password" class="form-control" id="loginPassword" name="password">
           </div>
           <button type="submit" class="btn btn-primary">Login</button>
